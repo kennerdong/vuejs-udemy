@@ -4,8 +4,14 @@ This repo contains code for the VueJS Udemy course I took.
 
 # Folder: vue-cli
 
-# Folder: assignment 6
+# Folder: assignment-6
 Working code for section 7 & assignment 7 for section 8
 
-# Folder: section 8
+# Folder: section-8
 Working code for section 8
+
+# Folder: section-9
+Working code for section 9, exludes code for assignment 8
+
+# Folder: assignment-8
+Working code for assignment 8 in section 9
