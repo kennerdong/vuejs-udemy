@@ -18,6 +18,7 @@
 <script>
 import ServerList from './ServerList.vue'
 import ServerDetails from './ServerDetails.vue'
+
 export default {
   components: {
     'ServerList': ServerList,
