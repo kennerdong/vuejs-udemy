@@ -1,0 +1,19 @@
+{
+  "name": "vuejs-udemy",
+  "version": "1.0.0",
+  "description": "This repo contains code for the VueJS Udemy course I took. [See course here](https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/ \"VueJS COurse on Udemy\")",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kennerdong/vuejs-udemy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kennerdong/vuejs-udemy/issues"
+  },
+  "homepage": "https://github.com/kennerdong/vuejs-udemy#readme"
+}
