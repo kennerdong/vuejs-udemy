@@ -4,8 +4,12 @@
             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <h1>Routing</h1>
                 <hr>
-                <app-header></app-header>
-                <router-view></router-view>
+                <!--<app-header></app-header>-->
+                <router-view name="header-top"></router-view>
+                <transition name="slide" mode="out-in">
+                  <router-view></router-view>
+                </transition>
+                <router-view name="header-bottom"></router-view>
             </div>
         </div>
     </div>
@@ -22,4 +26,20 @@ import Header from './components/Header.vue';
 </script>
 
 <style>
+  .slide-enter{
+    opacity: 0;
+  }
+  .slide-enter-active{
+    transition: opacity 1s ease;
+    // opacity: 1;
+    animation: 1s ease-out forwards;
+  }
+  .slide-leave-active{
+    transition: opacity 1s ease;
+    opacity: 0;
+    animation: 1s ease-out forwards;
+  }
+  .slide-leave{
+    opacity: 1;
+  }
 </style>
