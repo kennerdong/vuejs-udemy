@@ -5,19 +5,38 @@
     </div>
     <nav>
       <ul>
-        <li>
+        <li v-if="!auth">
           <router-link to="/signup">Sign Up</router-link>
         </li>
-        <li>
+        <li v-if="!auth">
           <router-link to="/signin">Sign In</router-link>
         </li>
-        <li>
+        <li v-if="auth">
           <router-link to="/dashboard">Dashboard</router-link>
+        </li>
+        <li v-if="auth">
+          <a @click="logout">Log out</a>
         </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+export default {
+  computed:{
+    auth(){
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch('logout');
+    }
+  }
+}
+</script>
+
 
 <style scoped>
   #header {
@@ -61,6 +80,7 @@
   li a {
     text-decoration: none;
     color: white;
+    cursor: pointer;
   }
 
   li a:hover,

@@ -70,6 +70,7 @@
 
 <script>
 import axios from '../../axios-auth';
+import {mapActions} from 'vuex';
 
   export default {
     data () {
@@ -84,6 +85,9 @@ import axios from '../../axios-auth';
       }
     },
     methods: {
+      ...mapActions([
+        'signup'
+      ]),
       onAddHobby () {
         const newHobby = {
           id: Math.random() * Math.random() * 1000,
@@ -104,12 +108,7 @@ import axios from '../../axios-auth';
           hobbies: this.hobbyInputs.map(hobby => hobby.value),
           terms: this.terms
         }
-        console.log(formData)
-        axios.post('/users.json',formData)
-        .then((response)=>{
-          console.log(response);
-        })
-        .catch(error=>console.log(error));
+        this.signup(formData);
       }
     }
   }

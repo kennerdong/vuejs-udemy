@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import axios from '../../axios-auth';
+import {mapActions} from 'vuex';
+
   export default {
     data () {
       return {
@@ -33,12 +36,15 @@
       }
     },
     methods: {
+      ...mapActions([
+        'login'
+      ]),
       onSubmit () {
         const formData = {
           email: this.email,
           password: this.password,
         }
-        console.log(formData)
+        this.login({email: formData.email, password: formData.password})
       }
     }
   }

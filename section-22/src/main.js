@@ -7,8 +7,8 @@ import store from "./store";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://vuejs-udemy-course-8712f.firebaseio.com";
-axios.defaults.headers.common["Authorization"] = "";
-axios.defaults.headers.get["Accepts"] = "application/json";
+// axios.defaults.headers.common["Authorization"] = "";
+// axios.defaults.headers.get["Accepts"] = "application/json";
 
 axios.interceptors.request.use(config => {
   console.log(config);
