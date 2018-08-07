@@ -3,7 +3,7 @@
   "description": "Vue Auth & more",
   "version": "1.0.0",
   "author": "Maximilian Schwarzmüller <business@academind.com>",
-  "main": "main.js"
+  "main": "main.js",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
