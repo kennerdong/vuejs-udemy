@@ -11,6 +11,7 @@ axios.defaults.baseURL = "https://vuejs-udemy-course-8712f.firebaseio.com";
 // axios.defaults.headers.common["Authorization"] = "";
 // axios.defaults.headers.get["Accepts"] = "application/json";
 
+Vue.config.devtools = true;
 Vue.use(Vuelidate);
 
 axios.interceptors.request.use(config => {
