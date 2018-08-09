@@ -1,6 +1,6 @@
 {
-  "name": "vue-update",
-  "description": "Vue Auth & more",
+  "name": "vue-js-udemy-section-24",
+  "description": "Input Validation",
   "version": "1.0.0",
   "author": "Maximilian Schwarzmüller <business@academind.com>",
   "main": "main.js",
@@ -13,6 +13,7 @@
     "axios": "0.18.0",
     "vue": "^2.4.4",
     "vue-router": "^3.0.1",
+    "vuelidate": "0.7.4",
     "vuex": "^3.0.0"
   },
   "devDependencies": {
@@ -26,5 +27,6 @@
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
-  }
+  },
+  "keywords": []
 }

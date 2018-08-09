@@ -2,33 +2,42 @@
   <div id="signup">
     <div class="signup-form">
       <form @submit.prevent="onSubmit">
-        <div class="input">
+        <div class="input" :class="{invalid: $v.email.$error}">
           <label for="email">Mail</label>
           <input
                   type="email"
                   id="email"
-                  v-model="email">
+                  v-model="email"
+                    @blur="$v.email.$touch()">
+                    <p v-if="$v.email.$error">Please provide a valid email address.</p>
+                    <p v-if="$v.email.$error">Email address is required.</p>
         </div>
-        <div class="input">
+        <div class="input" :class="{invalid: $v.age.$error}">
           <label for="age">Your Age</label>
           <input
                   type="number"
                   id="age"
-                  v-model.number="age">
+                  v-model.number="age"
+                    @blur="$v.age.$touch()">
+                    <p v-if="$v.age.$error">Minimum age is {{$v.age.$params.minVal.min}}</p>
         </div>
-        <div class="input">
+        <div class="input" :class="{invalid: $v.password.$error}">
           <label for="password">Password</label>
           <input
                   type="password"
                   id="password"
-                  v-model="password">
+                  v-model="password"
+                  @blur="$v.password.$touch()">
+                  <p v-if="$v.password.$error">Password needs to be at least {{$v.password.$params.minLen.min}} characters.</p>
         </div>
-        <div class="input">
+        <div class="input" :class="{invalid: $v.confirmPassword.$error}">
           <label for="confirm-password">Confirm Password</label>
           <input
                   type="password"
                   id="confirm-password"
-                  v-model="confirmPassword">
+                  v-model="confirmPassword"
+                  @blur="$v.confirmPassword.$touch()">
+                  <p v-if="$v.confirmPassword.$error">Both passwords must match.</p>
         </div>
         <div class="input">
           <label for="country">Country</label>
@@ -46,22 +55,30 @@
             <div
                     class="input"
                     v-for="(hobbyInput, index) in hobbyInputs"
-                    :key="hobbyInput.id">
+                    :key="hobbyInput.id"
+                    :class="{invalid: $v.hobbyInputs.$each[index].$error}">
               <label :for="hobbyInput.id">Hobby #{{ index }}</label>
               <input
                       type="text"
                       :id="hobbyInput.id"
+                      @blur="$v.hobbyInputs.$each[index].value.$touch()"
                       v-model="hobbyInput.value">
+              <p v-if="$v.hobbyInputs.$each[index].value.$error">Please specify at least {{$v.hobbyInputs.$each[index].value.$params.minLen.min}} characters for your hobby.</p>
               <button @click="onDeleteHobby(hobbyInput.id)" type="button">X</button>
             </div>
+              <p v-if="!$v.hobbyInputs.required">Please specify at least {{$v.hobbyInputs.$params.minLen.min}} hobby.</p>
           </div>
         </div>
-        <div class="input inline">
-          <input type="checkbox" id="terms" v-model="terms">
+        <div class="input inline" :class="{invalid: $v.terms.$invalid}">
+          <input 
+          type="checkbox" 
+          id="terms" 
+          v-model="terms" 
+          @change="$v.terms.$touch()">
           <label for="terms">Accept Terms of Use</label>
         </div>
         <div class="submit">
-          <button type="submit">Submit</button>
+          <button type="submit" :disabled="$v.$invalid">Submit</button>
         </div>
       </form>
     </div>
@@ -69,8 +86,9 @@
 </template>
 
 <script>
-import axios from '../../axios-auth';
+import axios from 'axios';
 import {mapActions} from 'vuex';
+import {required, email, numeric, between, minValue, minLength, sameAs, requiredUnless} from 'vuelidate/lib/validators'
 
   export default {
     data () {
@@ -109,6 +127,48 @@ import {mapActions} from 'vuex';
           terms: this.terms
         }
         this.signup(formData);
+      }
+    },
+    validations: {
+      email: {
+        required,
+        email,
+        anyName: input=>{
+          if(input === '')return true; //return true so that other validators will continue the checks
+          return axios.get('/users.json?orderBy="email"&equalTo="'+input + '"')
+          .then(res=>{
+            return Object.keys(res.data).length === 0
+          });
+        }
+      },
+      age: {
+        required,
+        numeric,
+        minVal: minValue(18)
+      },
+      password: {
+        required,
+        minLen: minLength(6)
+      },
+      confirmPassword: {
+        sameAs: sameAs('password')
+      },
+      terms: {
+        anyFunctionName(val,vm){
+          console.log("Val:", val);
+          console.log("vm.country:", vm.country);
+          return vm.country==="germany" ? true:val
+        },
+      },
+      hobbyInputs: {
+        required,
+        minLen: minLength(1),
+        $each: {
+          value: {
+            required,
+            minLen: minLength(5)
+          }
+        }
       }
     }
   }
@@ -158,6 +218,15 @@ import {mapActions} from 'vuex';
   .input select {
     border: 1px solid #ccc;
     font: inherit;
+  }
+
+  .input.invalid label{
+    color: red;
+  }
+
+  .input.invalid input{
+    border: solid 1px red;
+    background-color: #ffc9aa;
   }
 
   .hobbies button {

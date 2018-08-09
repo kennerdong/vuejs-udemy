@@ -17,8 +17,10 @@ const routes = [
     path: "/dashboard",
     component: DashboardPage,
     beforeEnter(to, from, next) {
-      console.log("beforeEnter token:", store.state.idToken);
-      if (store.state.idToken) {
+      // console.log("beforeEnter token:", store.state.idToken);
+      console.log("beforeEnter token:", localStorage.getItem("idToken"));
+      // if (store.state.idToken) {
+      if (localStorage.getItem("idToken")) {
         next();
       } else {
         console.log("Router cannot find token, redirect to signin");
